@@ -4,10 +4,10 @@ Package log implements structured logging helpers.
 
 Levels are supported with the following intended production semantics:
 
-- **DBG:** debug
-- **INF:** machine-actionable
-- **WRN:** human-observable
-- **ERR:** human-actionable
+- `DBG` *debug*
+- `INF` *machine-actionable*
+- `WRN` *human-observable*
+- `ERR` *human-actionable*
 
 Handlers are used to format log entry output. The following functions return
 loggers with preconfigured handlers. Optionally write your own by implementing
