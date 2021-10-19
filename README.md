@@ -32,7 +32,7 @@ import (
 
 func main() {
 	loggers := []*log.Logger{
-		log.NewLogger(os.Stderr),
+		log.NewLogger(os.Stderr, false),
 		log.NewTextLogger(os.Stderr),
 		log.NewShellLogger(os.Stderr),
 		log.NewMinimalShellLogger(os.Stderr),
