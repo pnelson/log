@@ -24,23 +24,24 @@ type Handler interface {
 const timeFormat = "15:04:05"
 
 type defaultHandler struct {
-	mu  sync.Mutex
-	enc *json.Encoder
+	mu    sync.Mutex
+	enc   *json.Encoder
+	debug bool
 }
 
 // NewLogger returns a *Logger that writes JSON encoded logs.
 //
 // This logger is recommended for production. Entries with log
 // level INF are discarded as they are intended to be purely
-// informational and machine-actionable events. Unlike a leveled
-// logger, entries with log level DBG will continue to be logged.
-func NewLogger(w io.Writer) *Logger {
-	return New(&defaultHandler{enc: json.NewEncoder(w)})
+// informational and machine-actionable events. Entries with log
+// level DBG will be logged if debug is true.
+func NewLogger(w io.Writer, debug bool) *Logger {
+	return New(&defaultHandler{enc: json.NewEncoder(w), debug: debug})
 }
 
 // Log implements the Handler interface.
 func (h *defaultHandler) Log(e Entry) error {
-	if e.Level == INF {
+	if e.Level == INF || (e.Level == DBG && !h.debug) {
 		return nil
 	}
 	h.mu.Lock()
